@@ -8,7 +8,7 @@ from kneed import KneeLocator
 import matplotlib.pyplot as plt
 from sklearn.metrics import calinski_harabasz_score, silhouette_score
 from sklearn.metrics import davies_bouldin_score
-
+import pickle
 
 # Load the data
 data = pd.read_excel('merged.xlsx', engine='openpyxl')
@@ -62,6 +62,8 @@ labels_2 = kmeans_2.fit_predict(reduced_data)
 # ריצה עם 3 אשכולות
 kmeans_3 = KMeans(n_clusters=3, random_state=42)
 labels_3 = kmeans_3.fit_predict(reduced_data)
+with open("model.pkl", "wb") as f:
+    pickle.dump({"scaler": scaler, "pca": pca, "kmeans": kmeans_3}, f)
 
 # ניתוח מספר הנקודות בכל אשכול
 clusters_2 = pd.Series(labels_2).value_counts()
